@@ -42,11 +42,11 @@
             <td><%=c.getImage()%></td>
             <td>
                 <form action="edit" method="post">
-                    <input type="text" value="<%=c.getId()%>" name="id">
+                    <input type="hidden" value="<%=c.getId()%>" name="id">
                     <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                 </form>
                 <form action="delete" method="post">
-                    <input type="text" value="<%=c.getId()%>" name="id_category">
+                    <input type="hidden" value="<%=c.getId()%>" name="id_category">
                     <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </form>
             </td>

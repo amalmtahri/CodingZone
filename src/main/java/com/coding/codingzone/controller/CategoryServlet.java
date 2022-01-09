@@ -12,37 +12,14 @@ import java.sql.SQLException;
 
 @WebServlet(name = "CategoryServlet", value = "/CategoryServlet")
 public class CategoryServlet extends HttpServlet {
-    /*@Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CategoryImpl category = new CategoryImpl();
-        System.out.println(category.all());
-        request.setAttribute("data", category.all());
-        this.getServletContext().getRequestDispatcher("/view/category/index.jsp").forward(request,response);
-        PrintWriter out = response.getWriter();
-        out.println("<h1>" + "message" + "</h1>");
-    }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String imgae = request.getParameter("image");
-        int id = 1;
-        Category category = new Category(id,name,imgae);
-        CategoryImpl category1 = new CategoryImpl();
-        category1.create(category);
-
-        int id_category = Integer.parseInt(request.getParameter("id_category"));
-        category1.delete(id_category);
-        System.out.println(id_category);
-        response.sendRedirect("/view/category/index.jsp");
-
-
-    }*/
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getServletPath();

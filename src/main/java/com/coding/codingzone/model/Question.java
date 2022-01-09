@@ -1,24 +1,34 @@
 package com.coding.codingzone.model;
 
 public class Question {
+    private int id;
     private String question;
-    private String reponse;
+    private String response;
     private String choice1;
     private String choice2;
     private String choice3;
-    private String timeLimit;
-    private Integer score;
-    private Category id_category;
+    private int timeLimit;
+    private int id_category;
+    private int score;
 
-    public Question(String question, String reponse, String choice1, String choice2, String choice3, String timeLimit, Integer score, Category id_category) {
+    public Question(int id, String question, String response, String choice1, String choice2, String choice3, int timeLimit, int id_category, int score) {
+        this.id = id;
         this.question = question;
-        this.reponse = reponse;
+        this.response = response;
         this.choice1 = choice1;
         this.choice2 = choice2;
         this.choice3 = choice3;
         this.timeLimit = timeLimit;
-        this.score = score;
         this.id_category = id_category;
+        this.score = score;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getQuestion() {
@@ -29,12 +39,12 @@ public class Question {
         this.question = question;
     }
 
-    public String getReponse() {
-        return reponse;
+    public String getResponse() {
+        return response;
     }
 
-    public void setReponse(String reponse) {
-        this.reponse = reponse;
+    public void setResponse(String response) {
+        this.response = response;
     }
 
     public String getChoice1() {
@@ -61,40 +71,42 @@ public class Question {
         this.choice3 = choice3;
     }
 
-    public String getTimeLimit() {
+    public int getTimeLimit() {
         return timeLimit;
     }
 
-    public void setTimeLimit(String timeLimit) {
+    public void setTimeLimit(int timeLimit) {
         this.timeLimit = timeLimit;
     }
 
-    public Category getId_category() {
+    public int getId_category() {
         return id_category;
     }
 
-    public Integer getScore() {
+    public void setId_category(int id_category) {
+        this.id_category = id_category;
+    }
+
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(int score) {
         this.score = score;
-    }
-
-    public void setId_category(Category id_category) {
-        this.id_category = id_category;
     }
 
     @Override
     public String toString() {
         return "Question{" +
-                "question='" + question + '\'' +
-                ", reponse='" + reponse + '\'' +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", reponse='" + response + '\'' +
                 ", choice1='" + choice1 + '\'' +
                 ", choice2='" + choice2 + '\'' +
                 ", choice3='" + choice3 + '\'' +
-                ", timeLimit='" + timeLimit + '\'' +
+                ", timeLimit=" + timeLimit +
                 ", id_category=" + id_category +
+                ", score=" + score +
                 '}';
     }
 }

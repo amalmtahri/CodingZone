@@ -1,10 +1,12 @@
 package com.coding.codingzone.dao;
 
 import java.sql.Connection;
+import java.util.List;
 
 public abstract class DAO<T> {
     //public Connection connect = Config.getInstance();
 
+    public abstract List<T> all();
     public abstract T find(int id);
     public abstract T create(T obj);
     public abstract T update(T obj);

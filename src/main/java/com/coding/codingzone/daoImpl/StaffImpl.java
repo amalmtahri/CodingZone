@@ -8,8 +8,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class StaffImpl extends DAO<Staff> {
+
+    @Override
+    public List<Staff> all() {
+        return null;
+    }
 
     @Override
     public Staff find(int id) {

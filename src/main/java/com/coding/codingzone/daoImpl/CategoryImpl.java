@@ -34,6 +34,7 @@ public class CategoryImpl extends DAO<Category> {
     }
 
 
+    @Override
     public List<Category> all() {
         List<Category> data = new ArrayList<>();
         try{
