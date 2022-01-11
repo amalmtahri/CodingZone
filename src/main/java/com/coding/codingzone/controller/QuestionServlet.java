@@ -11,7 +11,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "QuestionServlet", value = {"/QuestionServlet","/QuestionServlet/newQuestion","/QuestionServlet/insertQuestion","/QuestionServlet/updateQuestion","/QuestionServlet/editQuestion","/QuestionServlet/deleteQuestion","/QuestionServlet/list","/QuestionServlet/QuestionServlet/newQuestion","/deleteQuestion","/QuestionServlet/QuestionServlet/deleteQuestion","/list","/QuestionServlet/QuestionServlet/insertQuestion","/QuestionServlet/QuestionServlet/list"})
+@WebServlet(name = "QuestionServlet", value = {"/QuestionServlet","/insertQuestion","/newQuestion","/deleteQuestion","/listQuestion","/editQuestion","/updateQuestion"})
 public class QuestionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -27,32 +27,20 @@ public class QuestionServlet extends HttpServlet {
         try {
             switch (action) {
 
-               case "/QuestionServlet/newQuestion":
+               case "/newQuestion":
                     showForm(request, response);
                     break;
-                case "/QuestionServlet/insertQuestion":
+                case "/insertQuestion":
                     addQuestion(request, response);
-                    break;
-                case "/QuestionServlet/deleteQuestion":
-                    deleteQuestion(request, response);
-                    break;
-                case "/QuestionServlet/editQuestion":
-                    showEditForm(request, response);
-                    break;
-                case "/QuestionServlet/updateQuestion":
-                    updateQuestion(request, response);
-                    break;
-                case "/QuestionServlet/QuestionServlet/newQuestion":
-                    showForm(request, response);
                     break;
                 case "/deleteQuestion":
                     deleteQuestion(request, response);
                     break;
-                case "/QuestionServlet/QuestionServlet/deleteQuestion":
-                    deleteQuestion(request, response);
+                case "/editQuestion":
+                    showEditForm(request, response);
                     break;
-                case "/QuestionServlet/QuestionServlet/insertQuestion":
-                    addQuestion(request, response);
+                case "/updateQuestion":
+                    updateQuestion(request, response);
                     break;
                 default:
                     listQuestion(request, response);
@@ -76,9 +64,11 @@ public class QuestionServlet extends HttpServlet {
             throws SQLException, ServletException, IOException {
         String id = request.getParameter("id");
         QuestionImpl question = new QuestionImpl();
-        System.out.println(question.find(id));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/question/editQuestion.jsp");
+        CategoryImpl category = new CategoryImpl();
+        System.out.println(category.all());
+        request.setAttribute("category", category.all());
         request.setAttribute("data", question.find(id));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/question/editQuestion.jsp");
         dispatcher.forward(request, response);
 
     }
@@ -87,7 +77,7 @@ public class QuestionServlet extends HttpServlet {
         String id = request.getParameter("id");
         QuestionImpl question = new QuestionImpl();
         question.delete(id);
-        response.sendRedirect("list");
+        response.sendRedirect("listQuestion");
     }
     private void addQuestion(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
@@ -97,13 +87,13 @@ public class QuestionServlet extends HttpServlet {
         String choice2 = request.getParameter("choice2");
         String choice3 = request.getParameter("choice3");
         int time = Integer.parseInt(request.getParameter("time"));
-        String id_category = request.getParameter("category_id");
+        Category id_category = new Category(request.getParameter("category_id"),"name","img");
         int score = Integer.parseInt(request.getParameter("score"));
         Question question1 = new Question(question,reponse,choice1,choice2,choice3,time,id_category,score);
         System.out.println(question1);
         QuestionImpl questionImpl = new QuestionImpl();
         questionImpl.create(question1);
-        response.sendRedirect("list");
+        response.sendRedirect("listQuestion");
     }
     private void updateQuestion(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
@@ -114,13 +104,13 @@ public class QuestionServlet extends HttpServlet {
         String choice2 = request.getParameter("choice2");
         String choice3 = request.getParameter("choice3");
         int time = Integer.parseInt(request.getParameter("time"));
-        String id_category = request.getParameter("category_id");
+        Category id_category = new Category(request.getParameter("category_id"),"name","img");
         int score = Integer.parseInt(request.getParameter("score"));
         Question question1 = new Question(id,question,reponse,choice1,choice2,choice3,time,id_category,score);
         System.out.println(question1);
         QuestionImpl questionImpl = new QuestionImpl();
         questionImpl.update(question1);
-        response.sendRedirect("list");
+        response.sendRedirect("listQuestion");
     }
     private void listQuestion(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {

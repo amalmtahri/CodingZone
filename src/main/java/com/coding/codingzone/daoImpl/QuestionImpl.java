@@ -23,9 +23,11 @@ public class QuestionImpl extends DAO<Question> {
             connection = SingletonDB.getInstance().getConnection();
             PreparedStatement st =  connection.prepareStatement(QueryDAO.SELECT_QUESTION);
             ResultSet rs = st.executeQuery();
+            System.out.println(rs);
             while (rs.next()) {
-                data.add(new Question(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getString(9),rs.getInt(8)));
+                data.add(new Question(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),new Category(rs.getString(9),rs.getString(11),rs.getString(12)),rs.getInt(8)));
             }
+
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -41,7 +43,7 @@ public class QuestionImpl extends DAO<Question> {
             st.setString(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                question = new Question(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getString(8),rs.getInt(9));
+                question = new Question(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),new Category(rs.getString(9),rs.getString(11),rs.getString(12)),rs.getInt(8));
             }
         }catch (SQLException e) {
             e.printStackTrace();
@@ -61,7 +63,7 @@ public class QuestionImpl extends DAO<Question> {
             st.setString(5, q.getChoice2());
             st.setString(6, q.getChoice3());
             st.setInt(7, q.getTimeLimit());
-            st.setString(8, q.getId_category());
+            st.setString(8, q.getId_category().getId());
             st.setInt(9, q.getScore());
             System.out.println(st);
             st.executeUpdate();
@@ -83,7 +85,7 @@ public class QuestionImpl extends DAO<Question> {
             st.setString(4, q.getChoice2());
             st.setString(5, q.getChoice3());
             st.setInt(6, q.getTimeLimit());
-            st.setString(7, q.getId_category());
+            st.setString(7, q.getId_category().getId());
             st.setInt(8, q.getScore());
             st.setString(9, q.getId());
             st.executeUpdate();

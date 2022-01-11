@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="container">
-    <a class="btn btn-success" href="CategoryServlet/new">Add</a>
+    <a class="btn btn-success mt-5 mb-5" href="new">Add</a>
     <table class="table">
         <thead>
         <tr>

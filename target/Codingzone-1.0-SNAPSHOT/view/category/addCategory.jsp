@@ -21,9 +21,8 @@
 </head>
 <body>
 <h2 class="text-center">Add Category</h2>
-
+<div class="container">
     <form action="insert" method="post" >
-
         <div>
             <label>Name category: </label>
             <input type="text" name="name" class="form-control">
@@ -34,5 +33,6 @@
         </div>
         <button type="submit" class="btn btn-primary mt-5">Add</button>
     </form>
+</div>
 </body>
 </html>

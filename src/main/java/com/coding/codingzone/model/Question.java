@@ -10,10 +10,10 @@ public class Question {
     private String choice2;
     private String choice3;
     private int timeLimit;
-    private String id_category;
+    private Category id_category;
     private int score;
 
-    public Question( String question, String response, String choice1, String choice2, String choice3, int timeLimit, String id_category, int score) {
+    public Question( String question, String response, String choice1, String choice2, String choice3, int timeLimit, Category id_category, int score) {
         this.id = UUID.randomUUID().toString();
         this.question = question;
         this.response = response;
@@ -25,7 +25,7 @@ public class Question {
         this.score = score;
     }
 
-    public Question(String id, String question, String response, String choice1, String choice2, String choice3, int timeLimit, String id_category, int score) {
+    public Question(String id, String question, String response, String choice1, String choice2, String choice3, int timeLimit, Category id_category, int score) {
         this.id = id;
         this.question = question;
         this.response = response;
@@ -93,11 +93,11 @@ public class Question {
         this.timeLimit = timeLimit;
     }
 
-    public String getId_category() {
+    public Category getId_category() {
         return id_category;
     }
 
-    public void setId_category(String id_category) {
+    public void setId_category(Category id_category) {
         this.id_category = id_category;
     }
 

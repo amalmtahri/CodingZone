@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-@WebServlet(name = "CategoryServlet", value = "/CategoryServlet")
+@WebServlet(name = "CategoryServlet", value = {"/CategoryServlet","/insert","/new","/delete","/listCategory","/edit","/update"})
 public class CategoryServlet extends HttpServlet {
 
     @Override
@@ -26,7 +26,7 @@ public class CategoryServlet extends HttpServlet {
 
         try {
             switch (action) {
-                case "/CategoryServlet/new":
+                case "/new":
                     showForm(request, response);
                     break;
                 case "/insert":
@@ -41,6 +41,7 @@ public class CategoryServlet extends HttpServlet {
                 case "/update":
                     updateCategory(request, response);
                     break;
+
                 default:
                     listCategory(request, response);
                     break;
@@ -83,7 +84,7 @@ public class CategoryServlet extends HttpServlet {
         System.out.println(category);
         CategoryImpl category1 = new CategoryImpl();
         category1.create(category);
-        response.sendRedirect("list");
+        response.sendRedirect("listCategory");
     }
     private void updateCategory(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
@@ -93,7 +94,7 @@ public class CategoryServlet extends HttpServlet {
         Category category = new Category(id,name,imgae);
         CategoryImpl category1 = new CategoryImpl();
         category1.update(category);
-        response.sendRedirect("list");
+        response.sendRedirect("listCategory");
     }
 
     private void deleteCategory(HttpServletRequest request, HttpServletResponse response)
@@ -101,7 +102,7 @@ public class CategoryServlet extends HttpServlet {
         String id = request.getParameter("id_category");
         CategoryImpl category1 = new CategoryImpl();
         category1.delete(id);
-        response.sendRedirect("list");
+        response.sendRedirect("listCategory");
     }
 
 }

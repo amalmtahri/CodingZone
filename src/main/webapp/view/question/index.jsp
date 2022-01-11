@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="container">
-    <a class="btn btn-success mt-5 mb-5" href="QuestionServlet/newQuestion">Add</a>
+    <a class="btn btn-success mt-5 mb-5" href="newQuestion">Add</a>
     <table class="table">
         <thead>
         <tr>
@@ -50,10 +50,10 @@
             <td><%=q.getChoice2()%></td>
             <td><%=q.getChoice3()%></td>
             <td><%=q.getTimeLimit()%></td>
-            <td><%=q.getId_category()%></td>
+            <td><%=q.getId_category().getName()%></td>
             <td><%=q.getScore()%></td>
             <td class="d-flex">
-                <form action="edit" method="post">
+                <form action="editQuestion" method="post">
                     <input type="hidden" value="<%=q.getId()%>" name="id">
                     <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                 </form> &nbsp; &nbsp;
