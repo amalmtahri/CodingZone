@@ -1,16 +1,30 @@
 package com.coding.codingzone.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Test {
+    private String id;
     private String name;
     private Date creationDate;
-    private QuestionsTest question;
 
-    public Test(String name, Date creationDate, QuestionsTest question) {
+    public Test(String name) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+    }
+
+    public Test(String id, String name, Date creationDate) {
+        this.id = id;
         this.name = name;
         this.creationDate = creationDate;
-        this.question = question;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Date getCreationDate() {
@@ -19,14 +33,6 @@ public class Test {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
-    }
-
-    public QuestionsTest getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(QuestionsTest question) {
-        this.question = question;
     }
 
     public String getName() {
@@ -42,7 +48,6 @@ public class Test {
         return "Test{" +
                 "name='" + name + '\'' +
                 ", creationDate=" + creationDate +
-                ", question=" + question +
                 '}';
     }
 }

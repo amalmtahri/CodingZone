@@ -48,6 +48,7 @@
         </div>
         <a href="CategoryServlet">list category</a>
         <a href="QuestionServlet">list question</a>
+        <a href="newTest">add test</a>
         <div class="col bg-primary hidden-md-down d-flex h-100 ">
             <div class="row justify-content-center align-items-center text-center">
                 <div class="col-8">
