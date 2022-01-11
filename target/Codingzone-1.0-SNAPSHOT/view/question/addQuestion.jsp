@@ -22,50 +22,53 @@
 </head>
 <body>
 <h2 class="text-center">Add Question</h2>
-<form action="insertQuestion" method="post">
-  <div>
-    <label>Question :</label>
-    <input type="text" name="question" class="form-control">
-  </div>
-  <div>
-    <label>Response :</label>
-    <input type="text" name="response" class="form-control">
-  </div>
-  <div>
-    <label>Choice 1 :</label>
-    <input type="text" name="choice1" class="form-control">
-  </div>
-  <div>
-    <label>Choice 2 :</label>
-    <input type="text" name="choice2" class="form-control">
-  </div>
-  <div>
-    <label>Choice 3 :</label>
-    <input type="text" name="choice3" class="form-control">
-  </div>
-  <div>
-    <label>Time Limit :</label>
-    <input type="text" name="time" class="form-control">
-  </div>
-  <div>
-    <label>Category :</label>
-    <select name="category_id">
-      <%
-        ArrayList<Category> std =
-                (ArrayList<Category>)request.getAttribute("data");
-        for(Category c:std){
-      %>
-      <option value="<%=c.getId()%>"><%=c.getName()%></option>
-      <%}%>
-    </select>
-  </div>
-  <div>
-    <label>Score :</label>
-    <input type="text" name="score" class="form-control">
-  </div>
-  <div>
-    <button type="submit" class="btn btn-primary mt-5">Add</button>
-  </div>
-</form>
+<div class="container">
+  <form action="insertQuestion" method="post">
+    <div>
+      <label>Question :</label>
+      <input type="text" name="question" class="form-control">
+    </div>
+    <div>
+      <label>Response :</label>
+      <input type="text" name="response" class="form-control">
+    </div>
+    <div>
+      <label>Choice 1 :</label>
+      <input type="text" name="choice1" class="form-control">
+    </div>
+    <div>
+      <label>Choice 2 :</label>
+      <input type="text" name="choice2" class="form-control">
+    </div>
+    <div>
+      <label>Choice 3 :</label>
+      <input type="text" name="choice3" class="form-control">
+    </div>
+    <div>
+      <label>Time Limit :</label>
+      <input type="number" name="time" class="form-control">
+    </div>
+    <div>
+      <label>Category :</label>
+      <select name="category_id" class="form-control">
+        <%
+          ArrayList<Category> std =
+                  (ArrayList<Category>)request.getAttribute("data");
+          for(Category c:std){
+        %>
+        <option value="<%=c.getId()%>"><%=c.getName()%></option>
+        <%}%>
+      </select>
+    </div>
+    <div>
+      <label>Score :</label>
+      <input type="text" name="score" class="form-control">
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary mt-5">Add</button>
+    </div>
+  </form>
+</div>
+
 </body>
 </html>
