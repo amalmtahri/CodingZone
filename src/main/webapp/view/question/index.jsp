@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="container">
-    <a class="btn btn-success mt-5 mb-5" href="new">Add</a>
+    <a class="btn btn-success mt-5 mb-5" href="QuestionServlet/newQuestion">Add</a>
     <table class="table">
         <thead>
         <tr>
@@ -57,8 +57,8 @@
                     <input type="hidden" value="<%=q.getId()%>" name="id">
                     <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                 </form> &nbsp; &nbsp;
-                <form action="delete" method="post">
-                    <input type="hidden" value="<%=q.getId()%>" name="id_category">
+                <form action="deleteQuestion" method="post">
+                    <input type="hidden" value="<%=q.getId()%>" name="id">
                     <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </form>
             </td>

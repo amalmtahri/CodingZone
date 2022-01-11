@@ -18,7 +18,7 @@ public class StaffImpl extends DAO<Staff> {
     }
 
     @Override
-    public Staff find(int id) {
+    public Staff find(String id) {
         return null;
     }
 
@@ -33,7 +33,7 @@ public class StaffImpl extends DAO<Staff> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(String id) {
 
     }
     public Staff login(String email,String password){

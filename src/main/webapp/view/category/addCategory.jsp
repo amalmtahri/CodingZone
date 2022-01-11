@@ -20,16 +20,19 @@
     </style>
 </head>
 <body>
-    <form action="insert" method="post">
+<h2 class="text-center">Add Category</h2>
+
+    <form action="insert" method="post" >
+
         <div>
             <label>Name category: </label>
-            <input type="text" name="name">
+            <input type="text" name="name" class="form-control">
         </div>
         <div>
             <label>Image category: </label>
             <input type="file" name="image" class="form-control">
         </div>
-        <button type="submit">Add</button>
+        <button type="submit" class="btn btn-primary mt-5">Add</button>
     </form>
 </body>
 </html>

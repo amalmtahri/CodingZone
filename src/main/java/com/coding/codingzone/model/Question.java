@@ -1,17 +1,31 @@
 package com.coding.codingzone.model;
 
+import java.util.UUID;
+
 public class Question {
-    private int id;
+    private String id;
     private String question;
     private String response;
     private String choice1;
     private String choice2;
     private String choice3;
     private int timeLimit;
-    private int id_category;
+    private String id_category;
     private int score;
 
-    public Question(int id, String question, String response, String choice1, String choice2, String choice3, int timeLimit, int id_category, int score) {
+    public Question( String question, String response, String choice1, String choice2, String choice3, int timeLimit, String id_category, int score) {
+        this.id = UUID.randomUUID().toString();
+        this.question = question;
+        this.response = response;
+        this.choice1 = choice1;
+        this.choice2 = choice2;
+        this.choice3 = choice3;
+        this.timeLimit = timeLimit;
+        this.id_category = id_category;
+        this.score = score;
+    }
+
+    public Question(String id, String question, String response, String choice1, String choice2, String choice3, int timeLimit, String id_category, int score) {
         this.id = id;
         this.question = question;
         this.response = response;
@@ -23,11 +37,11 @@ public class Question {
         this.score = score;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -79,11 +93,11 @@ public class Question {
         this.timeLimit = timeLimit;
     }
 
-    public int getId_category() {
+    public String getId_category() {
         return id_category;
     }
 
-    public void setId_category(int id_category) {
+    public void setId_category(String id_category) {
         this.id_category = id_category;
     }
 

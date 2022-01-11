@@ -17,15 +17,15 @@ public class CategoryImpl extends DAO<Category> {
 
     Connection connection = null;
     @Override
-    public Category find(int id) {
+    public Category find(String id) {
         Category category = null;
         try{
             connection = SingletonDB.getInstance().getConnection();
             PreparedStatement st =  connection.prepareStatement(QueryDAO.GETONE_CATEGORY);
-            st.setInt(1, id);
+            st.setString(1, id);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                category = new Category(rs.getInt(1),rs.getString(2),rs.getString(3));
+                category = new Category(rs.getString(1),rs.getString(2),rs.getString(3));
             }
         }catch (SQLException e) {
             e.printStackTrace();
@@ -40,9 +40,10 @@ public class CategoryImpl extends DAO<Category> {
         try{
             connection = SingletonDB.getInstance().getConnection();
             PreparedStatement st =  connection.prepareStatement(QueryDAO.SELECT_CATEGORY);
+            System.out.println(st);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-               data.add(new Category(rs.getInt(1),rs.getString(2),rs.getString(3)));
+               data.add(new Category(rs.getString(1),rs.getString(2),rs.getString(3)));
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -56,8 +57,10 @@ public class CategoryImpl extends DAO<Category> {
         try {
             connection = SingletonDB.getInstance().getConnection();
             PreparedStatement st =  connection.prepareStatement(QueryDAO.INSERT_CATEGORY);
-            st.setString(1, c.getName());
-            st.setString(2, c.getImage());
+            st.setString(1, c.getId());
+            st.setString(2, c.getName());
+            st.setString(3, c.getImage());
+            System.out.println(st);
             st.executeUpdate();
             System.out.println("category ajouter");
         } catch (SQLException e) {
@@ -73,6 +76,7 @@ public class CategoryImpl extends DAO<Category> {
             PreparedStatement st =  connection.prepareStatement(QueryDAO.UPDATE_CATEGORY);
             st.setString(1, c.getName());
             st.setString(2, c.getImage());
+            st.setString(3, c.getId());
             st.executeUpdate();
             System.out.println("category updated");
         } catch (SQLException e) {
@@ -82,17 +86,16 @@ public class CategoryImpl extends DAO<Category> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(String id) {
 
         try{
             connection = SingletonDB.getInstance().getConnection();
             PreparedStatement st =  connection.prepareStatement(QueryDAO.DELETE_CATEGORY);
-            st.setInt(1,id);
+            st.setString(1,id);
+            System.out.println(st);
             st.executeUpdate();
             System.out.println("deleted");
         }catch(SQLException e){
-
         }
-
     }
 }

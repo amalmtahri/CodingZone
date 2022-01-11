@@ -1,24 +1,31 @@
 package com.coding.codingzone.model;
 
+import java.util.UUID;
+
 public class Category {
-    private int id;
+    private String id;
     private String name;
     private String image;
 
-    public Category(int id, String name, String image) {
+    public Category(String name, String image) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+        this.image = image;
+    }
+    public Category(String id ,String name, String image) {
         this.id = id;
         this.name = name;
         this.image = image;
-
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
@@ -38,7 +45,8 @@ public class Category {
     @Override
     public String toString() {
         return "Category{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", image='" + image + '\'' +
                 '}';
     }

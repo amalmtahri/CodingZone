@@ -26,6 +26,9 @@
         Category data = (Category) request.getAttribute("data");
     %>
     <div>
+        <input type="hidden" name="id" value="<%=data.getId()%>">
+    </div>
+    <div>
         <label>Name category: </label>
         <input type="text" name="name" value="<%=data.getName()%>">
     </div>

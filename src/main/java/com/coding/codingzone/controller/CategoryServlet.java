@@ -26,7 +26,7 @@ public class CategoryServlet extends HttpServlet {
 
         try {
             switch (action) {
-                case "/new":
+                case "/CategoryServlet/new":
                     showForm(request, response);
                     break;
                 case "/insert":
@@ -66,7 +66,7 @@ public class CategoryServlet extends HttpServlet {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        String id = request.getParameter("id");
         CategoryImpl category = new CategoryImpl();
         System.out.println(category.find(id));
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/category/editCategory.jsp");
@@ -78,18 +78,18 @@ public class CategoryServlet extends HttpServlet {
     private void addCategory(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         String name = request.getParameter("name");
-        String imgae = request.getParameter("image");
-        int id = 1;
-        Category category = new Category(id,name,imgae);
+        String image = request.getParameter("image");
+        Category category = new Category(name,image);
+        System.out.println(category);
         CategoryImpl category1 = new CategoryImpl();
         category1.create(category);
         response.sendRedirect("list");
     }
     private void updateCategory(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
+        String id = request.getParameter("id");
         String name = request.getParameter("name");
         String imgae = request.getParameter("image");
-        int id = 1;
         Category category = new Category(id,name,imgae);
         CategoryImpl category1 = new CategoryImpl();
         category1.update(category);
@@ -98,8 +98,7 @@ public class CategoryServlet extends HttpServlet {
 
     private void deleteCategory(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id_category"));
-        System.out.println(id);
+        String id = request.getParameter("id_category");
         CategoryImpl category1 = new CategoryImpl();
         category1.delete(id);
         response.sendRedirect("list");

@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="container">
-    <a class="btn btn-success" href="new">Add</a>
+    <a class="btn btn-success" href="CategoryServlet/new">Add</a>
     <table class="table">
         <thead>
         <tr>
@@ -40,11 +40,11 @@
         <tr>
             <td><%=c.getName()%></td>
             <td><%=c.getImage()%></td>
-            <td>
+            <td class="d-flex">
                 <form action="edit" method="post">
                     <input type="hidden" value="<%=c.getId()%>" name="id">
                     <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                </form>
+                </form>&nbsp; &nbsp;
                 <form action="delete" method="post">
                     <input type="hidden" value="<%=c.getId()%>" name="id_category">
                     <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button>

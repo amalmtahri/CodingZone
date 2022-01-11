@@ -24,7 +24,7 @@ public class QuestionImpl extends DAO<Question> {
             PreparedStatement st =  connection.prepareStatement(QueryDAO.SELECT_QUESTION);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                data.add(new Question(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getInt(8),rs.getInt(9)));
+                data.add(new Question(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getString(9),rs.getInt(8)));
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -33,22 +33,78 @@ public class QuestionImpl extends DAO<Question> {
     }
 
     @Override
-    public Question find(int id) {
+    public Question find(String id) {
+        Question question = null;
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.GETONE_QUESTION);
+            st.setString(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                question = new Question(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getInt(7),rs.getString(8),rs.getInt(9));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return question;
+    }
+    @Override
+    public Question create(Question q) {
+
+        try {
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.INSERT_QUESTION);
+            st.setString(1, q.getId());
+            st.setString(2, q.getQuestion());
+            st.setString(3, q.getResponse());
+            st.setString(4, q.getChoice1());
+            st.setString(5, q.getChoice2());
+            st.setString(6, q.getChoice3());
+            st.setInt(7, q.getTimeLimit());
+            st.setString(8, q.getId_category());
+            st.setInt(9, q.getScore());
+            System.out.println(st);
+            st.executeUpdate();
+            System.out.println("question ajouter");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
-    public Question create(Question obj) {
+    public Question update(Question q) {
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.UPDATE_QUESTION);
+            st.setString(1, q.getQuestion());
+            st.setString(2, q.getResponse());
+            st.setString(3, q.getChoice1());
+            st.setString(4, q.getChoice2());
+            st.setString(5, q.getChoice3());
+            st.setInt(6, q.getTimeLimit());
+            st.setString(7, q.getId_category());
+            st.setInt(8, q.getScore());
+            st.setString(9, q.getId());
+            st.executeUpdate();
+            System.out.println("question updated");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
-    public Question update(Question obj) {
-        return null;
-    }
+    public void delete(String id) {
 
-    @Override
-    public void delete(int id) {
-
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.DELETE_QUESTION);
+            st.setString(1,id);
+            System.out.println(st);
+            st.executeUpdate();
+            System.out.println("deleted");
+        }catch(SQLException e){
+        }
     }
 }
