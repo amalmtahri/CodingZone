@@ -20,23 +20,26 @@
     </style>
 </head>
 <body>
-<h2>Edit Category</h2>
-<form action="update" method="post">
-    <%
-        Category data = (Category) request.getAttribute("data");
-    %>
-    <div>
-        <input type="hidden" name="id" value="<%=data.getId()%>">
-    </div>
-    <div>
-        <label>Name category: </label>
-        <input type="text" name="name" value="<%=data.getName()%>">
-    </div>
-    <div>
-        <label>Image category: </label>
-        <input type="file" name="image" class="form-control" value="<%=data.getImage()%>">
-    </div>
-    <button type="submit">save</button>
-</form>
+<div class="container">
+    <h2>Edit Category</h2>
+    <form action="update" method="post">
+        <%
+            Category data = (Category) request.getAttribute("data");
+        %>
+        <div>
+            <input type="hidden" name="id" class="form-control" value="<%=data.getId()%>">
+        </div>
+        <div>
+            <label>Name category: </label>
+            <input type="text" name="name" value="<%=data.getName()%>" class="form-control">
+        </div>
+        <div>
+            <label>Image category: </label>
+            <input type="file" name="image" class="form-control" value="<%=data.getImage()%>">
+        </div>
+        <button type="submit" class="btn btn-success mt-5">save</button>
+    </form>
+</div>
+
 </body>
 </html>
