@@ -16,4 +16,6 @@ public final class QueryDAO {
     public static final String INSERT_TEST = "insert into test(id, name) values (?, ?)";
     public static final String SELECT_TEST = "select * from test";
     public static final String DELETE_TEST = "delete from test where id = ?";
+
+    public static final String INSERT_QUESTIONS_TEST = "insert into questtest (test_id, question_id) values (?, ?)";
 }
