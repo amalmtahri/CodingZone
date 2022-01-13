@@ -18,4 +18,10 @@ public final class QueryDAO {
     public static final String DELETE_TEST = "delete from test where id = ?";
 
     public static final String INSERT_QUESTIONS_TEST = "insert into questtest (test_id, question_id) values (?, ?)";
+
+    public static final String INSERT_QUIZ = "insert into quiz(id, code, test_id, candidat_id, staff_id) values(?, ?, ?, ?, ?)";
+
+    public static final String SELECT_CANDIDAT = "select c.*, p.* from candidat c, person p where c.person_id = p.id";
+
+    public static final String SELECT_EMAIL_CANDIDAT = "select c.*, p.* from candidat c, person p where c.person_id = p.id and c.id = ?";
 }

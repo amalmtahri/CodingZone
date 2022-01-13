@@ -14,6 +14,7 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
 public class LoginServlet extends HttpServlet {
     private String message;
+    private String msgError = null;
 
     public void init() {
         message = "Hello World!";
@@ -24,7 +25,8 @@ public class LoginServlet extends HttpServlet {
 
         // Hello
         PrintWriter out = response.getWriter();
-        out.println("<html><body>");
+        out.println("<html>" +
+                "<body>");
         out.println("<h1>" + message + "</h1>");
         out.println("<h1>" + SingletonDB.getInstance().getConnection() + "</h1>");
         out.println("</body></html>");
@@ -39,11 +41,16 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("session", "on");
         StaffImpl login = new StaffImpl();
         login.login(email,password);
-        //this.getServletContext().getRequestDispatcher("/CategoryServlet").forward(request,response);
-        //response.sendRedirect("/CategoryServlet");
+        System.out.println(login.login(email,password));
 
+        if(login.login(email,password) != null){
+            this.getServletContext().getRequestDispatcher("/view/dashboard.jsp").forward(request,response);
+        }else{
+            msgError = "Password or email incorrect";
+            request.setAttribute("msg",msgError);
+            this.getServletContext().getRequestDispatcher("/index.jsp").forward(request,response);
+        }
     }
-
 
     public void destroy() {
     }

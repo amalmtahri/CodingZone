@@ -29,16 +29,16 @@ public class CategoryServlet extends HttpServlet {
                 case "/new":
                     showForm(request, response);
                     break;
-                case "/CategoryServlet/insert":
+                case "/insert":
                     addCategory(request, response);
                     break;
-                case "/CategoryServlet/delete":
+                case "/delete":
                     deleteCategory(request, response);
                     break;
-                case "/CategoryServlet/edit":
+                case "/edit":
                     showEditForm(request, response);
                     break;
-                case "/CategoryServlet/update":
+                case "/update":
                     updateCategory(request, response);
                     break;
 

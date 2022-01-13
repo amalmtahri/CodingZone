@@ -38,7 +38,7 @@ public class StaffImpl extends DAO<Staff> {
     }
     public Staff login(String email,String password){
         Connection connection = null;
-        Staff staff=null;
+        Staff staff = null;
 
         try {
             connection = SingletonDB.getInstance().getConnection();
@@ -47,7 +47,7 @@ public class StaffImpl extends DAO<Staff> {
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                staff=new Staff(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
+                staff = new Staff(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(6));
                 System.out.println("You have successfully logged in");
             } else {
                 System.out.println("Wrong email & Password");

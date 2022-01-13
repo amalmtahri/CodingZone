@@ -39,6 +39,9 @@
                             <span class="float-right">! Forgotten password</span>
                         </div>
                         <button class="btn btn-primary col-12 my-2  font-weight-bold" type="submit">Login</button>
+                        <% if(request.getAttribute("msg") != null) {%>
+                        <div class="alert alert-danger"><%= request.getAttribute("msg") %></div>
+                        <%}%>
                         <div class="text-center">
                             <h6 class="display-6 py-4 text-truncate text-secondary">Don't have account ? Create one here</h6>
                         </div>
@@ -46,10 +49,6 @@
                 </div>
             </div>
         </div>
-        <a href="CategoryServlet">list category</a>
-        <a href="QuestionServlet">list question</a>
-        <a href="newTest">add test</a>
-        <a href="affectQst">add question test</a>
         <div class="col bg-primary hidden-md-down d-flex h-100 ">
             <div class="row justify-content-center align-items-center text-center">
                 <div class="col-8">

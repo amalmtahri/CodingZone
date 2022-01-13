@@ -23,6 +23,7 @@
 </head>
 <body>
     <div class="container">
+        <h2 class="text center">Affecter des questions à un test</h2>
         <form method="post" action="insertQstTest">
 
             <div>

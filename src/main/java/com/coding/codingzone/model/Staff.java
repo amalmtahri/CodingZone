@@ -4,7 +4,8 @@ public class Staff extends Person{
 
 
     private String password;
-    public Staff(int id,String firstname, String lastname, String email, String password) {
+
+    public Staff(String id,String firstname, String lastname, String email, String password) {
         super(id,firstname, lastname, email);
         this.password = password;
     }
@@ -22,7 +23,10 @@ public class Staff extends Person{
     @Override
     public String toString() {
         return "Stuff{" +
-                "password='" + password + '\'' +
+                "firstname='" + getFirstname() + '\'' +
+                ", lastname='" + getLastname() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ",password='" + password + '\'' +
                 '}';
     }
 }

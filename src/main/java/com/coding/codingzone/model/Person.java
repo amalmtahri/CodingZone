@@ -1,23 +1,23 @@
 package com.coding.codingzone.model;
 
 public class Person {
-    private int id;
+    private String id;
     private String firstname;
     private String lastname;
     private String email;
 
-    public Person(int id,String firstname, String lastname, String email) {
+    public Person(String id,String firstname, String lastname, String email) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

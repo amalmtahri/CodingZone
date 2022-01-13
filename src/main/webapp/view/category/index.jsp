@@ -41,11 +41,11 @@
             <td><%=c.getName()%></td>
             <td><%=c.getImage()%></td>
             <td class="d-flex">
-                <form action="CategoryServlet/edit" method="post">
+                <form action="edit" method="post">
                     <input type="hidden" value="<%=c.getId()%>" name="id">
                     <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                 </form>&nbsp; &nbsp;
-                <form action="CategoryServlet/delete" method="post">
+                <form action="delete" method="post">
                     <input type="hidden" value="<%=c.getId()%>" name="id_category">
                     <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </form>
