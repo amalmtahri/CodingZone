@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.coding.codingzone.model.Staff" %><%--
   Created by IntelliJ IDEA.
   User: adm
   Date: 12/01/2022
@@ -27,6 +27,5 @@
     <a href="affectQst" class="btn btn-primary">add question test</a>&nbsp;
     <a href="QuizServlet" class="btn btn-primary">Affect quiz</a>
 </div>
-
 </body>
 </html>

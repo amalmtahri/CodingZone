@@ -49,7 +49,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col bg-primary hidden-md-down d-flex h-100 ">
             <div class="row justify-content-center align-items-center text-center">
                 <div class="col-8">

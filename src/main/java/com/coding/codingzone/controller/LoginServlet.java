@@ -2,6 +2,7 @@ package com.coding.codingzone.controller;
 
 import com.coding.codingzone.daoImpl.StaffImpl;
 import com.coding.codingzone.db.SingletonDB;
+import com.coding.codingzone.model.Staff;
 
 import java.io.*;
 import java.sql.Connection;
@@ -38,12 +39,12 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         HttpSession session = request.getSession();
-        session.setAttribute("session", "on");
         StaffImpl login = new StaffImpl();
         login.login(email,password);
         System.out.println(login.login(email,password));
-
         if(login.login(email,password) != null){
+            String id_staff = login.login(email,password).getId_staff();
+            session.setAttribute("id_staff",id_staff);
             this.getServletContext().getRequestDispatcher("/view/dashboard.jsp").forward(request,response);
         }else{
             msgError = "Password or email incorrect";

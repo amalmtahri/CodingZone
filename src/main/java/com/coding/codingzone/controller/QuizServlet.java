@@ -30,9 +30,10 @@ public class QuizServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String id_test = request.getParameter("test_id");
         String[] items = request.getParameterValues("candidats");
-        String id_stuff = "hh5566688";
+        String id_stuff = request.getParameter("id_staff");
         for(int index = 0; index<items.length; index++){
             System.out.print(items[0] + "\n");
             Quiz quiz = new Quiz(id_test,items[index],id_stuff);
@@ -46,7 +47,6 @@ public class QuizServlet extends HttpServlet {
             } catch (MessagingException e) {
                 e.printStackTrace();
             }
-
         }
         System.out.println(id_test);
     }
