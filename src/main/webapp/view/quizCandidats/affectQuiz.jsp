@@ -24,7 +24,7 @@
 <body>
 <div class="container">
     <h2 class="text-center">Affect Quiz</h2>
-    <form action="QuizServlet" method="post">
+    <form action="AffectQuiz" method="post">
         <div>
             <label>Test Name :</label>
             <select name="test_id" class="form-control">

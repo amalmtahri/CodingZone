@@ -50,13 +50,45 @@ public class CandidatImpl extends DAO<Candidat> {
     }
     @Override
     public Candidat find(String id) {
-        return null;
+        Candidat candidat = null;
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.FIND_CANDIDAT);
+            st.setString(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                candidat = new Candidat(rs.getString(1),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return candidat;
     }
 
+
+
     @Override
-    public Candidat create(Candidat obj) {
-        return null;
+    public Candidat create(Candidat c) {
+        try {
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.INSERT_PERSON);
+            st.setString(1, c.getId());
+            st.setString(2, c.getFirstname());
+            st.setString(3, c.getLastname());
+            st.setString(4, c.getEmail());
+            st.executeUpdate();
+            PreparedStatement state =  connection.prepareStatement(QueryDAO.INSERT_CANDIDAT);
+            state.setString(1, c.getId());
+            state.setString(2, c.getId_candidat());
+            state.executeUpdate();
+            System.out.println("Candidat bien ajouter");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return c;
     }
+
+
 
     @Override
     public Candidat update(Candidat obj) {

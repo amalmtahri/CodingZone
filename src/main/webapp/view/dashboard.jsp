@@ -25,7 +25,8 @@
     <a href="QuestionServlet" class="btn btn-primary">list question</a>&nbsp;
     <a href="newTest" class="btn btn-primary">add test</a>&nbsp;
     <a href="affectQst" class="btn btn-primary">add question test</a>&nbsp;
-    <a href="QuizServlet" class="btn btn-primary">Affect quiz</a>
+    <a href="NewQuiz" class="btn btn-primary">Affect quiz</a>&nbsp;
+    <a href="QuizServlet" class="btn btn-primary">Passer Quiz</a>
 </div>
 </body>
 </html>

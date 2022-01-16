@@ -51,7 +51,6 @@ public class CategoryServlet extends HttpServlet {
                 case "/update":
                     updateCategory(request, response);
                     break;
-
                 default:
                     listCategory(request, response);
                     break;
@@ -124,8 +123,8 @@ public class CategoryServlet extends HttpServlet {
         response.sendRedirect("listCategory");
     }
 
-
-    private String extractFileName(Part part) {//This method will print the file name.
+    private String extractFileName(Part part) {
+        //This method will print the file name.
         String contentDisp = part.getHeader("content-disposition");
         String[] items = contentDisp.split(";");
         for (String s : items) {

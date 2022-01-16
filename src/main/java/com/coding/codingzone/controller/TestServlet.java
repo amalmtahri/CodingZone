@@ -89,8 +89,6 @@ public class TestServlet extends HttpServlet {
             questionsTest.create(questions);
         }
 
-
-
     }
     private void affectQst(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
