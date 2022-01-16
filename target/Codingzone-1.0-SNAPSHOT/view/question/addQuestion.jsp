@@ -26,27 +26,27 @@
   <form action="insertQuestion" method="post">
     <div>
       <label>Question :</label>
-      <input type="text" name="question" class="form-control">
+      <input type="text" name="question" class="form-control" required>
     </div>
     <div>
       <label>Response :</label>
-      <input type="text" name="response" class="form-control">
+      <input type="text" name="response" class="form-control" required>
     </div>
     <div>
       <label>Choice 1 :</label>
-      <input type="text" name="choice1" class="form-control">
+      <input type="text" name="choice1" class="form-control" required>
     </div>
     <div>
       <label>Choice 2 :</label>
-      <input type="text" name="choice2" class="form-control">
+      <input type="text" name="choice2" class="form-control" required>
     </div>
     <div>
       <label>Choice 3 :</label>
-      <input type="text" name="choice3" class="form-control">
+      <input type="text" name="choice3" class="form-control" required>
     </div>
     <div>
       <label>Time Limit :</label>
-      <input type="number" name="time" class="form-control">
+      <input type="number" name="time" class="form-control" required>
     </div>
     <div>
       <label>Category :</label>
@@ -62,7 +62,7 @@
     </div>
     <div>
       <label>Score :</label>
-      <input type="text" name="score" class="form-control">
+      <input type="text" name="score" class="form-control" required>
     </div>
     <div>
       <button type="submit" class="btn btn-primary mt-5">Add</button>

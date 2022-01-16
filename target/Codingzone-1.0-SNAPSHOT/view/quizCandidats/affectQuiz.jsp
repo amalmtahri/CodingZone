@@ -38,7 +38,7 @@
 
             </select>
         </div>
-        <input type="text" value="<%= session.getAttribute("id_staff")%>" name="id_staff">
+        <input type="hidden" value="<%= session.getAttribute("id_staff")%>" name="id_staff">
         <div>
             <label>Candidats :</label>
             <select class="form-control" name="candidats" multiple>

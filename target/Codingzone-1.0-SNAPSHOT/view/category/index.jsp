@@ -39,7 +39,7 @@
         %>
         <tr>
             <td><%=c.getName()%></td>
-            <td><%=c.getImage()%></td>
+            <td><img src="<%=c.getImage()%>" width="50px" alt="imgCtaegory"></td>
             <td class="d-flex">
                 <form action="edit" method="post">
                     <input type="hidden" value="<%=c.getId()%>" name="id">

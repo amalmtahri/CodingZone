@@ -6,12 +6,22 @@ import com.coding.codingzone.model.Category;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 
 @WebServlet(name = "CategoryServlet", value = {"/CategoryServlet","/insert","/new","/delete","/listCategory","/edit","/update"})
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50)
+
 public class CategoryServlet extends HttpServlet {
+
+    public static final String UPLOAD_DIR = "C:\\Users\\adm\\Desktop\\codingzone\\src\\main\\webapp\\view\\images";
+    public String dbFileName = "";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -77,10 +87,19 @@ public class CategoryServlet extends HttpServlet {
     }
 
     private void addCategory(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
+            throws SQLException, IOException, ServletException {
         String name = request.getParameter("name");
-        String image = request.getParameter("image");
-        Category category = new Category(name,image);
+        Part part = request.getPart("file");
+        String fileName = extractFileName(part);
+        String savePath = UPLOAD_DIR + File.separator + fileName;
+        System.out.println("savePath: " + savePath);
+        String sRootPath = new File(savePath).getAbsolutePath();
+        System.out.println("sRootPath: " + sRootPath);
+        part.write(savePath + File.separator);
+        File fileSaveDir1 = new File(savePath);
+        dbFileName = UPLOAD_DIR + File.separator + fileName;
+        part.write(savePath + File.separator);
+        Category category = new Category(name,dbFileName);
         System.out.println(category);
         CategoryImpl category1 = new CategoryImpl();
         category1.create(category);
@@ -103,6 +122,18 @@ public class CategoryServlet extends HttpServlet {
         CategoryImpl category1 = new CategoryImpl();
         category1.delete(id);
         response.sendRedirect("listCategory");
+    }
+
+
+    private String extractFileName(Part part) {//This method will print the file name.
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            }
+        }
+        return "";
     }
 
 }

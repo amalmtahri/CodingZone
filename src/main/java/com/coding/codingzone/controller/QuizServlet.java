@@ -42,11 +42,7 @@ public class QuizServlet extends HttpServlet {
             CandidatImpl candidat = new CandidatImpl();
             System.out.println(candidat.getDataCandidat(items[index]));
             String email = candidat.getDataCandidat(items[index]).getEmail();
-            try {
-                SendMail.send(email,"Test Coding Zone");
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            }
+            SendMail.send("codingzone.youcode@gmail.com","codingzone123",email,"test coding zone","hey");
         }
         System.out.println(id_test);
     }

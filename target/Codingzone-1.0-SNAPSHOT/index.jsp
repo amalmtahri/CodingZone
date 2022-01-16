@@ -25,11 +25,11 @@
                     <form action="hello-servlet" class="justify-content-center" method="post">
                         <div class="form-group">
                             <label class="sr-only">Email</label>
-                            <input type="text" class="form-control" placeholder="enter your email" name="email" >
+                            <input type="text" class="form-control" placeholder="enter your email" name="email" required>
                         </div>
                         <div class="form-group">
                             <label class="sr-only">password</label>
-                            <input type="password" class="form-control" placeholder="enter your password" name="password">
+                            <input type="password" class="form-control" placeholder="enter your password" name="password" required>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="autoSizingCheck2" >

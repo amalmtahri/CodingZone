@@ -22,14 +22,14 @@
 <body>
 <h2 class="text-center">Add Category</h2>
 <div class="container">
-    <form action="insert" method="post" >
+    <form action="insert" method="post" enctype="multipart/form-data">
         <div>
             <label>Name category: </label>
-            <input type="text" name="name" class="form-control">
+            <input type="text" name="name" class="form-control" required>
         </div>
         <div>
             <label>Image category: </label>
-            <input type="file" name="image" class="form-control">
+            <input type="file" name="file" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-primary mt-5">Add</button>
     </form>
