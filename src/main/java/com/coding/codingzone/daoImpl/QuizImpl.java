@@ -4,9 +4,7 @@ import com.coding.codingzone.dao.DAO;
 import com.coding.codingzone.dao.QueryDAO;
 import com.coding.codingzone.db.SingletonDB;
 import com.coding.codingzone.demo.SendMail;
-import com.coding.codingzone.model.Category;
-import com.coding.codingzone.model.Question;
-import com.coding.codingzone.model.Quiz;
+import com.coding.codingzone.model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -88,6 +86,74 @@ public class QuizImpl extends DAO<Quiz> {
             System.out.println("Incorrect !! ");
         }
     }
+    public void insertResultQuiz(int code, ResultQuiz rq){
+        try {
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.INSERT_RESULTQUIZ);
+            st.setString(1, rq.getId());
+            st.setInt(2, rq.getScore());
+            st.setInt(3, code);
+            st.executeUpdate();
+            System.out.println("ResultTest ajouter");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean checkTestPassed(int code){
+        boolean res = false;
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.CHECK_QUIZ);
+            st.setInt(1, code);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                res= true;
+            }
+            else
+            {
+                res = false;
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public List<GroupByCategory> CategoriesOfTest(int code) {
+        List<GroupByCategory> data = new ArrayList<>();
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.CATEGORY_QUIZ_COUNT);
+            st.setInt(1, code);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                data.add(new GroupByCategory(rs.getString(1),rs.getString(2),rs.getInt(3),rs.getFloat(4)));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return data;
+    }
+    public boolean checkTestExist(int code){
+        boolean res = false;
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.CHECK_QUIZ_EXIST);
+            st.setInt(1, code);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                res= true;
+            }
+            else
+            {
+                res = false;
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
 
 
 }

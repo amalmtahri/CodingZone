@@ -45,6 +45,7 @@ public class LoginServlet extends HttpServlet {
         if(login.login(email,password) != null){
             String id_staff = login.login(email,password).getId_staff();
             session.setAttribute("id_staff",id_staff);
+            session.setAttribute("nameStuff",login.login(email,password).getFirstname());
             this.getServletContext().getRequestDispatcher("/view/dashboard.jsp").forward(request,response);
         }else{
             msgError = "Password or email incorrect";

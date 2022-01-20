@@ -1,45 +1,55 @@
 package com.coding.codingzone.demo;
-
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.util.Date;
 import java.util.Properties;
-
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 public class SendMail {
 
+    public static void sendEmail(String toEmail, String subject, String body){
+        try
+        {
+            final String fromEmail = "codingzone.youcode@gmail.com"; //requires valid gmail id
+            final String password = "codingzone123"; // correct password for gmail id
 
-    public static void send(String from,String pwd,String to,String sub,String msg){
-        //Propriétés
-        Properties p = new Properties();
-        p.put("mail.smtp.host", "smtp.gmail.com");
-        p.put("mail.smtp.socketFactory.port", "465");
-        p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        p.put("mail.smtp.auth", "true");
-        p.put("mail.smtp.port", "465");
-
-        //Session
-        Session s = Session.getDefaultInstance(p,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(from, pwd);
+            Authenticator auth = new Authenticator() {
+                //override the getPasswordAuthentication method
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(fromEmail, password);
                 }
-        });
-        //composer le message
-        try {
-            MimeMessage m = new MimeMessage(s);
-            m.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
-            m.setSubject(sub);
-            m.setText(msg);
-            //envoyer le message
-            Transport.send(m);
-            System.out.println("Message envoyé avec succès");
-        } catch (MessagingException e) {
+            };
+
+            Properties props = new Properties();
+            props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+            props.put("mail.smtp.port", "587"); //TLS Port
+            props.put("mail.smtp.auth", "true"); //enable authentication
+            props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+
+
+            Session session = Session.getInstance(props, auth);
+            MimeMessage msg = new MimeMessage(session);
+            //set message headers
+            msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+            msg.addHeader("format", "flowed");
+            msg.addHeader("Content-Transfer-Encoding", "8bit");
+
+            msg.setFrom(new InternetAddress("codingzone.youcode@gmail.com", "Coding Zone"));
+
+            msg.setReplyTo(InternetAddress.parse("codingzone.youcode@gmail.com", false));
+
+            msg.setSubject(subject, "UTF-8");
+
+            msg.setText(body, "UTF-8");
+
+            msg.setSentDate(new Date());
+
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
+            Transport.send(msg);
+
+            System.out.println("EMail Sent Successfully!!");
+        }
+
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

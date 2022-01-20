@@ -1,5 +1,7 @@
 package com.coding.codingzone.model;
 
+import java.util.UUID;
+
 public class Person {
     private String id;
     private String firstname;
@@ -11,6 +13,17 @@ public class Person {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+    }
+
+    public Person(String firstname, String lastname, String email) {
+        this.id = UUID.randomUUID().toString();
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+    }
+
+    public Person() {
+
     }
 
     public String getId() {

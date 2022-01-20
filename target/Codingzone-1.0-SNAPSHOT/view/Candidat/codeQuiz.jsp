@@ -1,11 +1,12 @@
 <%--
   Created by IntelliJ IDEA.
-  User: adm
-  Date: 16/01/2022
-  Time: 18:53
+  User: admin
+  Date: 12/01/2022
+  Time: 10:35
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
     <head>
@@ -35,11 +36,14 @@
                     <div class="card-body bg-light ">
                         <form class="form-example" action="PassQuiz" method="post">
                             <div class="form-group m-5">
-                                <input type="text" class="form-control" id="code" placeholder="Code du test" name="code">
+                                <input type="number" class="form-control" id="code" placeholder="Code du test" name="code">
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary col-10    font-weight-bold  ">Valider</button>
                             </div>
+                            <c:if test="${data != null}">
+                                <div class="text-center form-group m-5"> <%=  request.getAttribute("data") %> </div>
+                            </c:if>
                         </form>
                     </div>
                 </div>
@@ -55,7 +59,5 @@
         </div>
     </div>
 </footer>
-
 </body>
 </html>
-

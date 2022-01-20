@@ -1,37 +1,31 @@
+
 package com.coding.codingzone.controller;
 
-import com.coding.codingzone.daoImpl.CandidatImpl;
-import com.coding.codingzone.daoImpl.QuizImpl;
-import com.coding.codingzone.daoImpl.TestImpl;
-import com.coding.codingzone.demo.SendMail;
-import com.coding.codingzone.model.Candidat;
-import com.coding.codingzone.model.Quiz;
+        import com.coding.codingzone.dao.DAO;
+        import com.coding.codingzone.dao.DAOFactory;
+        import com.coding.codingzone.daoImpl.CandidatImpl;
+        import com.coding.codingzone.daoImpl.QuizImpl;
+        import com.coding.codingzone.daoImpl.TestImpl;
+        import com.coding.codingzone.demo.SendMail;
+        import com.coding.codingzone.model.Question;
+        import com.coding.codingzone.model.Quiz;
+        import com.coding.codingzone.model.ResultQuiz;
 
-import javax.mail.MessagingException;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+        import javax.servlet.*;
+        import javax.servlet.http.*;
+        import javax.servlet.annotation.*;
+        import java.io.*;
+        import java.sql.SQLException;
+        import java.util.ArrayList;
+        import java.util.Base64;
+        import java.util.List;
+@WebServlet(name = "QuizServlet", value = {"/QuizServlet","/PassQuiz","/nextQuestion","/Quiz","/AffectQuiz","/NewQuiz","/tapezCode"})
 
-
-import com.coding.codingzone.daoImpl.QuizImpl;
-import com.coding.codingzone.model.Candidat;
-import com.coding.codingzone.model.Category;
-import com.coding.codingzone.model.Question;
-
-
-import java.io.*;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-
-@WebServlet(name = "QuizServlet", value = {"/QuizServlet","/PassQuiz","/nextQuestion","/Quiz","/AffectQuiz","/NewQuiz"})
 public class QuizServlet extends HttpServlet {
     int i = 0;
+    int b =0;
     List<Question> questions = new ArrayList<>();
+
     QuizImpl quiz = new QuizImpl();
     static  int code ;
     @Override
@@ -48,26 +42,32 @@ public class QuizServlet extends HttpServlet {
         try {
             switch (action) {
 
+                case "/NewQuiz":
+                    showFormQuiz(request, response);
+                    break;
+                case "/AffectQuiz":
+                    addQuiz(request, response);
+                    break;
                 case "/QuizServlet":
                     showForm(request, response);
                     break;
-                case "/NewQuiz":
-                    showFormQuiz(request, response);
+                case "/tapezCode":
+                    tapezCode(request, response);
+                    break;
                 case "/PassQuiz":
                     listQuestion(request, response);
                     break;
                 case "/nextQuestion":
                     nextQuestion(request, response);
-                case "/AffectQuiz":
-                    addQuiz(request, response);
                 default:
-                    listQuestion(request, response);
+                    showError(request, response);
                     break;
             }
         } catch (SQLException | ClassNotFoundException ex) {
             throw new ServletException(ex);
         }
     }
+
     private void showFormQuiz(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         TestImpl test = new TestImpl();
@@ -91,13 +91,22 @@ public class QuizServlet extends HttpServlet {
             CandidatImpl candidat = new CandidatImpl();
             System.out.println(candidat.getDataCandidat(items[index]));
             String email = candidat.getDataCandidat(items[index]).getEmail();
-            SendMail.send("codingzone.youcode@gmail.com","codingzone123",email,"test coding zone","hey");
+            SendMail.sendEmail(email,"test coding zone","hey");
         }
         response.sendRedirect("NewQuiz");
         System.out.println(id_test);
     }
-
+    private void showError(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/Exception/404.jsp");
+        dispatcher.forward(request, response);
+    }
     private void showForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/Candidat/home.jsp");
+        dispatcher.forward(request, response);
+    }
+    private void tapezCode(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/Candidat/codeQuiz.jsp");
         dispatcher.forward(request, response);
@@ -120,27 +129,75 @@ public class QuizServlet extends HttpServlet {
 
     private void nextQuestion(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
 
-        Question question = deCode(request.getParameter("currentQuestion"));
-        String choiceSelected = request.getParameter("choice");
-        quiz.checkResponse(question,choiceSelected,code);
-        i++;
-        if( i != questions.size()){
+        if( i==0){
+            int nbrQuestions = questions.size();
+            int timeLimit = questions.get(i).getTimeLimit();
             String  questionCrypte = enCode(questions.get(i));
-            String data = "<div class='py-2 h5'><b>Q."+questions.get(i).getQuestion() +" </b></div>"+
+            String qstContent = questions.get(i).getQuestion();
+            int count = i + 1;
+            String data =
                     "<input type = 'hidden' name='currentQuestion' value="+questionCrypte+" />"+
-                    "<label class='option'>"+questions.get(i).getResponse() +" <input type='radio' name='choice' value='"+questions.get(i).getResponse() +"'> <span class='checkmark'></span> </label>"+
-                    "<label class='option'>"+questions.get(i).getChoice1() +"<input type='radio' name='choice' value='"+questions.get(i).getChoice1() +"'> <span class='checkmark'></span> </label>"+
-                    "<label class='option'>"+questions.get(i).getChoice2() +"<input type='radio' name='choice' value='"+questions.get(i).getChoice2() +"'> <span class='checkmark'></span> </label>"+
-                    "<label class='option'>"+questions.get(i).getChoice3() +"<input type='radio' name='choice' value='"+questions.get(i).getChoice3() +"'> <span class='checkmark'></span> </label>" ;
+                            "<div class='inputGroup bg-white d-flex justify-content-between p-2 ' id='choice1'><input type='radio' id='option1' name='choice' value='"+questions.get(i).getResponse() +"'> <label for='option1'>"+questions.get(i).getResponse() + "</label></div>"+
+                            "<div class='inputGroup bg-white d-flex justify-content-between p-2 ' id='choice2'><input type='radio' id='option2' name='choice' value='"+questions.get(i).getChoice1() +"'> <label for='option2'>"+questions.get(i).getChoice1() + "</label></div>"+
+                            "<div class='inputGroup bg-white d-flex justify-content-between p-2 ' id='choice3'><input type='radio' id='option3' name='choice' value='"+questions.get(i).getChoice2() +"'> <label for='option3'>"+questions.get(i).getChoice2() + "</label></div>"+
+                            "<div class='inputGroup bg-white d-flex justify-content-between p-2 ' id='choice4'><input type='radio' id='option4' name='choice' value='"+questions.get(i).getChoice3() +"'> <label for='option4'>"+questions.get(i).getChoice3() + "</label></div>";
             request.setAttribute("question",data);
+            request.setAttribute("qstContent",qstContent);
+            request.setAttribute("count",count);
+            request.setAttribute("nbrQuestions",nbrQuestions);
+            request.setAttribute("timeLimit",timeLimit);
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("/view/Candidat/Quiz.jsp");
             dispatcher.forward(request, response);
-        }else{
-            String endQuiz = "Merci pour votre participation";
-            request.setAttribute("end",endQuiz);
+            i++;
+        }
+        else if(i>=1 && i < questions.size() ){
+            if(request.getParameter("currentQuestion")==null){
+                request.setAttribute("data","<div class='alert alert-danger' role='alert'>Quiz finished, sorry!</div>");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/view/Candidat/codeQuiz.jsp");
+                dispatcher.forward(request, response);
+                i=0;
+            }
+            else {
+                int nbrQuestions = questions.size();
+                int timeLimit = questions.get(i).getTimeLimit();
+                String currentQuestion = request.getParameter("currentQuestion");
+                String choice = request.getParameter("choice");
+                Question question = deCode(currentQuestion);
+                quiz.checkResponse(question, choice, code);
+                String questionCrypte = enCode(questions.get(i));
+                String qstContent = questions.get(i).getQuestion();
+                int count = i + 1;
+                String data =
+                        "<input type = 'hidden' name='currentQuestion' value=" + questionCrypte + " />" +
+                                "<div class='inputGroup bg-white d-flex justify-content-between p-2 ' id='choice1'><input type='radio' id='option1' name='choice' value='" + questions.get(i).getResponse() + "'> <label for='option1'>" + questions.get(i).getResponse() + "</label></div>" +
+                                "<div class='inputGroup bg-white d-flex justify-content-between p-2 ' id='choice2'><input type='radio' id='option2' name='choice' value='" + questions.get(i).getChoice1() + "'> <label for='option2'>" + questions.get(i).getChoice1() + "</label></div>" +
+                                "<div class='inputGroup bg-white d-flex justify-content-between p-2 ' id='choice3'><input type='radio' id='option3' name='choice' value='" + questions.get(i).getChoice2() + "'> <label for='option3'>" + questions.get(i).getChoice2() + "</label></div>" +
+                                "<div class='inputGroup bg-white d-flex justify-content-between p-2 ' id='choice4'><input type='radio' id='option4' name='choice' value='" + questions.get(i).getChoice3() + "'> <label for='option4'>" + questions.get(i).getChoice3() + "</label></div>";
+                request.setAttribute("question", data);
+                request.setAttribute("qstContent", qstContent);
+                request.setAttribute("count", count);
+                request.setAttribute("nbrQuestions", nbrQuestions);
+                request.setAttribute("timeLimit", timeLimit);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/view/Candidat/Quiz.jsp");
+                dispatcher.forward(request, response);
+                i++;
+            }
+        }
+        else if(i == questions.size()) {
+            String currentQuestion = request.getParameter("currentQuestion");
+            String choice = request.getParameter("choice");
+            Question question = deCode(currentQuestion);
+            quiz.checkResponse(question,choice,code);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/view/Candidat/endQuiz.jsp");
             dispatcher.forward(request, response);
             System.out.println("quiz finished");
+            i++;
+        }
+        else{
+            request.setAttribute("data","<div class='alert alert-danger' role='alert'> You have already passed the quiz !</div>");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/view/Candidat/codeQuiz.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
@@ -148,17 +205,27 @@ public class QuizServlet extends HttpServlet {
             throws SQLException, ServletException, IOException {
 
         code = Integer.parseInt(request.getParameter("code"));
-        questions = quiz.findTestQuestions(code);
-        String questionCrypte = enCode(questions.get(i));
-        String data = "<div class='py-2 h5'><b>Q."+questions.get(i).getQuestion() +" </b></div> " +
-                "<input type = 'hidden' name='currentQuestion' value="+questionCrypte+" />"+
-                "<label class='option'>"+questions.get(i).getResponse() +"<input type='radio' name='choice' value='"+questions.get(i).getResponse() +"'> <span class='checkmark'></span> </label>"+
-                "<label class='option'>"+questions.get(i).getChoice1() +"<input type='radio' name='choice' value='"+questions.get(i).getChoice1() +"'> <span class='checkmark'></span> </label>"+
-                "<label class='option'>"+questions.get(i).getChoice2() +"<input type='radio' name='choice' value='"+questions.get(i).getChoice2() +"'> <span class='checkmark'></span> </label>"+
-                "<label class='option'>"+questions.get(i).getChoice3() +"<input type='radio' name='choice' value='"+questions.get(i).getChoice3() +"'> <span class='checkmark'></span> </label>";
-        request.setAttribute("question",data);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/Candidat/Quiz.jsp");
-        dispatcher.forward(request, response);
+        if(quiz.checkTestPassed(code))
+        {
+            request.setAttribute("data","<div class='alert alert-danger' role='alert'> You have already passed the quiz !</div>");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/view/Candidat/codeQuiz.jsp");
+            dispatcher.forward(request, response);
+        }
+        else {
+            if(quiz.checkTestExist(code)){
+                ResultQuiz rq =new ResultQuiz();
+                quiz.insertResultQuiz(code,rq);
+                questions = quiz.findTestQuestions(code);
+                i=0;
+                request.setAttribute("data", quiz.CategoriesOfTest(code));
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/view/Candidat/startQuiz.jsp");
+                dispatcher.forward(request, response);
+            }else {
+                request.setAttribute("data","<div class='alert alert-danger' role='alert'> Code quiz invalide !</div>");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/view/Candidat/codeQuiz.jsp");
+                dispatcher.forward(request, response);
+            }
+        }
     }
-
 }
+

@@ -2,15 +2,33 @@ package com.coding.codingzone.model;
 
 
 import java.util.Date;
+import java.util.UUID;
 
 public class ResultQuiz {
+
+    private String id;
     private Integer score;
     private Date date;
-    private Quiz id_quiz;
+    private String id_quiz;
 
-    public ResultQuiz(Integer score, Date date) {
+    public ResultQuiz() {
+        this.id = UUID.randomUUID().toString();
+        this.score = 0;
+    }
+
+    public ResultQuiz(String id, Integer score, Date date, String id_quiz) {
+        this.id = id;
         this.score = score;
         this.date = date;
+        this.id_quiz = id_quiz;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Integer getScore() {
@@ -29,20 +47,11 @@ public class ResultQuiz {
         this.date = date;
     }
 
-    public Quiz getId_quiz() {
+    public String getId_quiz() {
         return id_quiz;
     }
 
-    public void setId_quiz(Quiz id_quiz) {
+    public void setId_quiz(String id_quiz) {
         this.id_quiz = id_quiz;
-    }
-
-    @Override
-    public String toString() {
-        return "ResultQuiz{" +
-                "score=" + score +
-                ", date=" + date +
-                ", id_quiz=" + id_quiz +
-                '}';
     }
 }

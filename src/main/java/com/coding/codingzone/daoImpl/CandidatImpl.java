@@ -4,8 +4,7 @@ import com.coding.codingzone.dao.DAO;
 import com.coding.codingzone.dao.QueryDAO;
 import com.coding.codingzone.db.SingletonDB;
 import com.coding.codingzone.model.Candidat;
-import com.coding.codingzone.model.Category;
-
+import com.coding.codingzone.model.Person;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,17 +68,31 @@ public class CandidatImpl extends DAO<Candidat> {
 
     @Override
     public Candidat create(Candidat c) {
+        return c;
+    }
+
+    @Override
+    public Candidat update(Candidat obj) {
+        return null;
+    }
+
+    @Override
+    public void delete(String id) {
+
+    }
+
+    public Candidat addCandidat(Candidat c, Person p){
         try {
             connection = SingletonDB.getInstance().getConnection();
             PreparedStatement st =  connection.prepareStatement(QueryDAO.INSERT_PERSON);
-            st.setString(1, c.getId());
-            st.setString(2, c.getFirstname());
-            st.setString(3, c.getLastname());
-            st.setString(4, c.getEmail());
+            st.setString(1, p.getId());
+            st.setString(2, p.getFirstname());
+            st.setString(3, p.getLastname());
+            st.setString(4, p.getEmail());
             st.executeUpdate();
             PreparedStatement state =  connection.prepareStatement(QueryDAO.INSERT_CANDIDAT);
-            state.setString(1, c.getId());
-            state.setString(2, c.getId_candidat());
+            state.setString(1, c.getId_candidat());
+            state.setString(2, p.getId());
             state.executeUpdate();
             System.out.println("Candidat bien ajouter");
         } catch (SQLException e) {
@@ -90,13 +103,35 @@ public class CandidatImpl extends DAO<Candidat> {
 
 
 
-    @Override
-    public Candidat update(Candidat obj) {
+    public Candidat updateCandidat(Person obj) {
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.UPDATE_CANDIDAT);
+            st.setString(1, obj.getFirstname());
+            st.setString(2, obj.getLastname());
+            st.setString(3, obj.getEmail());
+            st.setString(4, obj.getId());
+            st.executeUpdate();
+            System.out.println("candidat updated");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
-    @Override
-    public void delete(String id) {
+    public void deleteCandidat(String id_candidat, String id_person) {
 
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.DELETE_CANDIDAT);
+            PreparedStatement statement =  connection.prepareStatement(QueryDAO.DELETE_PERSON);
+            st.setString(1,id_candidat);
+            statement.setString(1,id_person);
+            System.out.println(st);
+            st.executeUpdate();
+            statement.executeUpdate();
+            System.out.println("deleted");
+        }catch(SQLException e){
+        }
     }
 }
