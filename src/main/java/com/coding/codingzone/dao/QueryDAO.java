@@ -37,7 +37,6 @@ public final class QueryDAO {
     public static final String CHECK_QUIZ = "SELECT * FROM resultquiz where quiz_id in (select id from quiz where code = ? )";
     public static final String MAJ_SCORE = "UPDATE resultquiz set score = score + ? where quiz_id in (select id from quiz where code = ? )";
 
-
     //Candidat
     public static final String INSERT_PERSON =  "insert into person (id,firstname,lastname,email)values(?,?,?,?)";
     public static final String INSERT_CANDIDAT = "insert into candidat(id,person_id)values(?,?)";
@@ -47,7 +46,19 @@ public final class QueryDAO {
     public static final String DELETE_PERSON = "delete from person where id = ?";
     public static final String UPDATE_CANDIDAT = "update person set firstname = ?, lastname = ?, email = ? where id = ?";
 
-
     public static final String CHECK_QUIZ_EXIST ="SELECT * FROM quiz WHERE code = ?";
+
+
+
+    //Dashboard
+    public static final  String COUNT_TESTS = "SELECT count(*) FROM test";
+    public static final  String COUNT_CANDIDATS= "SELECT count(*) FROM candidat";
+    public static final  String COUNT_CATEGORY = "SELECT count(*) FROM categorie";
+    public static final  String COUNT_QUESTIONS = "SELECT count(*) FROM question";
+    public static final  String TEST_PASSED_PER_DAY ="SELECT count(*) FROM resultquiz WHERE EXTRACT(day FROM created_at) = date_part('day', CURRENT_DATE)";
+    public static final  String TEST_PASSED_PER_MONTH ="SELECT count(*) FROM resultquiz WHERE EXTRACT(month FROM created_at) = date_part('year', CURRENT_DATE)";
+    public static final  String TEST_PASSED_PER_YEAR ="SELECT count(*) FROM resultquiz WHERE EXTRACT(month FROM created_at) = date_part('month', CURRENT_DATE)";
+
+
 
 }

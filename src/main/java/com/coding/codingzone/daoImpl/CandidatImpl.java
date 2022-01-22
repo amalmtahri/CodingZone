@@ -134,4 +134,20 @@ public class CandidatImpl extends DAO<Candidat> {
         }catch(SQLException e){
         }
     }
+
+    public int countCandidats(){
+        int countC = 0;
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.COUNT_CANDIDATS);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                countC = rs.getInt(1);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  countC;
+    }
+
 }

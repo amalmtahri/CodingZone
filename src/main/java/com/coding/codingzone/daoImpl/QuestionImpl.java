@@ -96,6 +96,21 @@ public class QuestionImpl extends DAO<Question> {
         return null;
     }
 
+    public int countQuestions(){
+        int countC = 0;
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.COUNT_QUESTIONS);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                countC = rs.getInt(1);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  countC;
+    }
+
     @Override
     public void delete(String id) {
 

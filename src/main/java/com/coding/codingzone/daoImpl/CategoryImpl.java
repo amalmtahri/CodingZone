@@ -84,6 +84,21 @@ public class CategoryImpl extends DAO<Category> {
         }
         return null;
     }
+    public int countCategories(){
+        int countC = 0;
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.COUNT_CATEGORY);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                countC = rs.getInt(1);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  countC;
+    }
+
 
     @Override
     public void delete(String id) {

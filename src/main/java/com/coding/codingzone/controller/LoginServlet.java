@@ -1,6 +1,6 @@
 package com.coding.codingzone.controller;
 
-import com.coding.codingzone.daoImpl.StaffImpl;
+import com.coding.codingzone.daoImpl.*;
 import com.coding.codingzone.db.SingletonDB;
 import com.coding.codingzone.model.Staff;
 
@@ -35,25 +35,40 @@ public class LoginServlet extends HttpServlet {
         Connection connection = SingletonDB.getInstance().getConnection();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher dispatcher ;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         HttpSession session = request.getSession();
         StaffImpl login = new StaffImpl();
+        CategoryImpl ci = new CategoryImpl();
+        QuestionImpl qi = new QuestionImpl();
+        CandidatImpl cai = new CandidatImpl();
+        TestImpl ti = new TestImpl();
         login.login(email,password);
         System.out.println(login.login(email,password));
         if(login.login(email,password) != null){
             String id_staff = login.login(email,password).getId_staff();
             session.setAttribute("id_staff",id_staff);
             session.setAttribute("nameStuff",login.login(email,password).getFirstname());
-            this.getServletContext().getRequestDispatcher("/view/dashboard.jsp").forward(request,response);
+            request.setAttribute("countCat", ci.countCategories());
+            request.setAttribute("countQuest", qi.countQuestions());
+            request.setAttribute("perDay", ti.testPassedPerDay());
+            request.setAttribute("perMonth", ti.testPassedPerMonth());
+            request.setAttribute("perYear", ti.testPassedPerYear());
+            request.setAttribute("countTest", ti.countTests());
+            request.setAttribute("countCand", cai.countCandidats());
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/view/dashboard.jsp");
+            dispatcher.forward(request, response);
         }else{
             msgError = "Password or email incorrect";
             request.setAttribute("msg",msgError);
-            this.getServletContext().getRequestDispatcher("/index.jsp").forward(request,response);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+            dispatcher.forward(request, response);
+
         }
     }
 
     public void destroy() {
     }
+
+
 }

@@ -67,4 +67,65 @@ public class TestImpl extends DAO<Test> {
         }catch(SQLException e){
         }
     }
+
+
+    public int testPassedPerDay(){
+        int days = 0;
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.TEST_PASSED_PER_DAY);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                days = rs.getInt(1);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  days;
+    }
+
+    public int testPassedPerMonth(){
+        int months = 0;
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.TEST_PASSED_PER_MONTH);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                months = rs.getInt(1);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  months;
+    }
+
+    public int testPassedPerYear(){
+        int years = 0;
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.TEST_PASSED_PER_YEAR);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                years = rs.getInt(1);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  years;
+    }
+    public int countTests(){
+        int countT = 0;
+        try{
+            connection = SingletonDB.getInstance().getConnection();
+            PreparedStatement st =  connection.prepareStatement(QueryDAO.COUNT_TESTS);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                countT = rs.getInt(1);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  countT;
+    }
+
 }
