@@ -1,9 +1,9 @@
 # CodingZone
 
 <img src="codingZone_Concept/Coding_zone.png">
-<img src="codingZone_Concept/home.png">
-<img src="codingZone_Concept/code.png">
-<img src="codingZone_Concept/satartQuiz.png">
-<img src="codingZone_Concept/passezQuiz.png">
-<img src="codingZone_Concept/homeDash.png">
-<img src="codingZone_Concept/listQuestions.png">
+<img src="codingZone_Concept/home.jpeg">
+<img src="codingZone_Concept/code.jpeg">
+<img src="codingZone_Concept/satartQuiz.jpeg">
+<img src="codingZone_Concept/passezQuiz.jpeg">
+<img src="codingZone_Concept/homeDash.jpeg">
+<img src="codingZone_Concept/listQuestions.jpeg">
