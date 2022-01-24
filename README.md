@@ -6,4 +6,6 @@
 <img src="codingZone_Concept/satartQuiz.jpeg">
 <img src="codingZone_Concept/passezQuiz.jpeg">
 <img src="codingZone_Concept/homeDash.jpeg">
+<img src="codingZone_Concept/quizPassed.jpeg">
 <img src="codingZone_Concept/listQuestions.jpeg">
+<img src="codingZone_Concept/addQuestion.jpeg">
